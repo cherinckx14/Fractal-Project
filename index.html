@@ -1,127 +1,58 @@
 <!DOCTYPE html>
 <html>
 <title>Herinckx+Dikkala Fractals</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<head>
-<link rel="stylesheet" href="style.css">
+<script src="../colors.js"></script>
+<script src="../fractal.js"></script>
+<script src="../animation.js"></script>
+<script src="../pythagoras.js"></script>
+<script src="../htree.js"></script>
+<script src="../koch.js"></script>
 </head>
-<style>
-  </style>
-</html>
 <body>
-<script>
-var Fractal = (function (Fractal){
-	"use strict";
+<h1>Fractal Demo</h1>
+<p>This page demonstrates three typical fractal shapes drawn on a HTML5 canvas
+using Javascript. The fractals are animated and follow the mouse, which creates
+quite a nice effect.</p>
 
-	// check if double inclusion
-	if (Fractal.Koch)
-		return Fractal;
+<h2>H-Tree</h2>
 
-	// constructor
-	function Koch(canvas, pos, maxorder, color) {
-		if (!(this instanceof Koch))
-			return new Koch(canvas, pos, maxorder, color);
+<canvas id="HTreeDemo" height="400" width="600"></canvas>
 
-		Fractal.Fractal.call(this, canvas, pos);
+<h2>Koch snowflake</h2>
 
-		this.ctx.strokeStyle = color || "black";
-		this.maxorder = maxorder || 10;
-		this.base_height = this.height / 2;
+<canvas id="KochDemo" height="400" width="600"></canvas>
 
-		this.update(pos);
-	}
+<h2>Pythagoras tree</h2>
 
-	Koch.prototype = Object.create(Fractal.Fractal.prototype);
+<canvas id="PythagorasDemo" height="400" width="600"></canvas>
 
-	Koch.prototype.update = function(pos) {
-		var x = pos && pos.x || 0,
-			y = pos && pos.y || 0,
-			ratio = Math.max(0.35, Math.min(0.65, x / this.width)),
-			// top angle of the initial triangle
-			gamma = (Math.PI / 2) * ratio,
-			order = Math.max(0, Math.min(this.maxorder,
-					Math.floor(2 * this.maxorder * (1 - (y / this.height))))),
-			// base angle
-			angle = (Math.PI - gamma) / 2,
-			ctx = this.ctx;
-
-		this.pos = this.pos || {x: 0, y: 0};
-		this.pos.x = x;
-		this.pos.y = y;
-
-		if (this.order === order && this.angle === angle)
-			return;
-
-		this.order = order;
-		this.angle = angle;
-
-		// ratio of width to the side of the smaller triangle in the middle
-		this.ratio = Math.sin(angle) / (3 * Math.sin(gamma));
-
-		// width and side width of the initial triangle
-		var width = (this.base_height / Math.tan(angle)) * 2, side = this.base_height
-				/ Math.sin(angle);
-
-		this.clear();
-
-		// drawing initial triangle
-		ctx.save();
-			ctx.translate((this.width / 2) - (width / 2), this.height / 3);
-			// beginPath and stroke outside also works
-			// but seems to be slower
-			// ctx.beginPath();
-			this.draw(1, width, 1);
-			ctx.save();
-				ctx.rotate(angle);
-				this.draw(1, side, -1);
-			ctx.restore();
-			ctx.translate(width, 0);
-			ctx.rotate(Math.PI - angle);
-			this.draw(1, side, 1);
-			// ctx.stroke();
-		ctx.restore();
-	};
-
-	Koch.prototype.draw = function(curr_order, width, inverse) {
-		var ctx = this.ctx,
-			third_width = width / 3,
-			// width of the triangle
-			tri_width = width * this.ratio;
-
-		if (curr_order > this.order) {
-			ctx.beginPath();
-			ctx.moveTo(0, 0);
-			ctx.lineTo(width, 0);
-			ctx.lineWidth = 1;
-			ctx.stroke();
-			return;
-		}
-
-		++curr_order;
-
-		this.draw(curr_order, third_width, inverse);
-
-		ctx.save();
-		ctx.translate(third_width * 2, 0);
-		this.draw(curr_order, third_width, inverse);
-		ctx.restore();
-
-		ctx.save();
-		ctx.translate(third_width, 0);
-		ctx.rotate(inverse * (-this.angle));
-		this.draw(curr_order, tri_width, inverse);
-		ctx.restore();
-
-		ctx.save();
-		ctx.translate(2 * third_width, 0);
-		ctx.rotate(inverse * -(Math.PI - this.angle));
-		this.draw(curr_order, tri_width, -inverse);
-		ctx.restore();
-	};
-
-	Fractal.Koch = Koch;
-	return Fractal;
-}(Fractal || {}));
+<script type="text/javascript">
+	var canvas = document.getElementById('KochDemo'),
+	fract = new Fractal.Koch(canvas, {x: 0, y: 0}, 5, "#477ff1");
+	
+	var start = {x: canvas.width / 2, y: canvas.height},
+	target = {x: 0, y: 0},
+	kochAnim = new Fractal.Animation(fract, start, target);
+	
+	kochAnim.skip(4000);
+	
+	canvas = document.getElementById('PythagorasDemo'),
+	fract = new Fractal.Pythagoras(canvas, {x: 0, y: 0}, 9, "#D4E576","#126845");
+	
+	start = {x: canvas.width / 2, y: canvas.height};
+	target = {x: 0, y: 0};
+	var pythAnim = new Fractal.Animation(fract, start, target);
+	
+	pythAnim.skip(6000);
+	
+	canvas = document.getElementById('HTreeDemo'),
+	fract = new Fractal.HTree(canvas, {x: 0, y: 0}, 14, "black", "rgba(91,0,144,0.3)", true);
+	
+	start = {x: canvas.width / 2, y: canvas.height};
+	target = {x: canvas.width / 4, y: canvas.height / 7};
+	var htreeAnim = new Fractal.Animation(fract, start, target);
+	
+	htreeAnim.skip(2000);
 </script>
 </body>
+</html>

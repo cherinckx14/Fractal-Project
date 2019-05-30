@@ -47,7 +47,7 @@ header li a {
 <header>
          <nav>
           <ul>
-               <li class="Change"><a href="#">About Me</a></li>
+               <li class="Change"><a href="#">Koch</a></li>
                <li class="Change1"><a href="#">Diversity</a></li>
                <li class="Change2"><a href="#">Communication</a></li>
                <li class="Change3"><a href="#">Critical Thinking</a></li>
@@ -60,18 +60,18 @@ header li a {
 
 <h2>H-Tree</h2>
 
-<canvas id="HTreeDemo" height="400" width="600"></canvas>
+<canvas class="HTree" height="400" width="600"></canvas>
 
 <h2>Koch snowflake</h2>
 
-<canvas id="KochDemo" height="400" width="600"></canvas>
+<canvas class="Koch" height="400" width="600"></canvas>
 
 <h2>Pythagoras tree</h2>
 
-<canvas id="PythagorasDemo" height="400" width="600"></canvas>
+<canvas class="Pythagoras" height="400" width="600"></canvas>
 
 <script type="text/javascript">
-	var canvas = document.getElementById('KochDemo'),
+	var canvas = document.getElementById('Koch'),
 	fract = new Fractal.Koch(canvas, {x: 0, y: 0}, 5, "#477ff1");
 	
 	var start = {x: canvas.width / 2, y: canvas.height},
@@ -80,7 +80,7 @@ header li a {
 	
 	kochAnim.skip(4000);
 	
-	canvas = document.getElementById('PythagorasDemo'),
+	canvas = document.getElementById('Pythagoras'),
 	fract = new Fractal.Pythagoras(canvas, {x: 0, y: 0}, 9, "#D4E576","#126845");
 	
 	start = {x: canvas.width / 2, y: canvas.height};
@@ -89,7 +89,7 @@ header li a {
 	
 	pythAnim.skip(6000);
 	
-	canvas = document.getElementById('HTreeDemo'),
+	canvas = document.getElementById('HTree'),
 	fract = new Fractal.HTree(canvas, {x: 0, y: 0}, 14, "black", "rgba(91,0,144,0.3)", true);
 	
 	start = {x: canvas.width / 2, y: canvas.height};
@@ -97,6 +97,26 @@ header li a {
 	var htreeAnim = new Fractal.Animation(fract, start, target);
 	
 	htreeAnim.skip(2000);
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+$(document).ready(function(){
+    $(".Change").click(function() {
+        $(".Koch").show();
+        $(".HTree").hide();
+        $(".Pythagoras").hide();
+    });
+$(document).ready(function(){
+    $(".Change").click(function() {
+        $(".Koch").hide();
+        $(".HTree").show();
+        $(".Pythagoras").hide();
+    });
+$(document).ready(function(){
+    $(".Change").click(function() {
+        $(".Koch").hide();
+        $(".HTree").hide();
+        $(".Pythagoras").show();
+    });
 </script>
 </body>
 </html>

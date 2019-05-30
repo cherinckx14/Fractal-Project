@@ -11,14 +11,15 @@
 </html>
 <body>
 <script>
-void drawCircle(float x, float y, float radius) {
-  ellipse(x, y, radius, radius);
-  if(radius > 8) {
-    drawCircle(x + radius/2, y, radius/2);
-    drawCircle(x - radius/2, y, radius/2);
-    drawCircle(x, y + radius/2, radius/2);
-    drawCircle(x, y - radius/2, radius/2);
-  }
+void cantor(float x, float y, float len) {
+  line(x,y,x+len,y);
+}
+cantor(10, 20, width-20);
+void cantor(float x, float y, float len) {
+  line(x,y,x+len,y);
+  y += 20;
+  line(x,y,x+len/3,y);
+  line(x+len*2/3,y,x+len,y);
 }
 </script>
 </body>

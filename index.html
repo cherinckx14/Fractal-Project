@@ -70,14 +70,15 @@ display: none;
 
 <canvas id="HTree" height="400" width="600"></canvas>
 </div>
+<div class="Koch">
 <h2>Koch snowflake</h2>
-
-<canvas class="Koch" height="400" width="600"></canvas>
-
+<canvas id="Koch" height="400" width="600"></canvas>
+</div>
+<div class="Pythagoras">
 <h2>Pythagoras tree</h2>
 
-<canvas class="Pythagoras" height="400" width="600"></canvas>
-
+<canvas id="Pythagoras" height="400" width="600"></canvas>
+</div>
 <script type="text/javascript">
 	var canvas = document.getElementById('Koch'),
 	fract = new Fractal.Koch(canvas, {x: 0, y: 0}, 5, "#477ff1");

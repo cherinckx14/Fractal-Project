@@ -1,1 +1,22 @@
-
+<!DOCTYPE html>
+<html>
+<title>Herinckx+Dikkala Fractals</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<link rel="stylesheet" href="style.css">
+</head>
+<style>
+  </style>
+</html>
+<script>
+void drawCircle(float x, float y, float radius) {
+  ellipse(x, y, radius, radius);
+  if(radius > 8) {
+    drawCircle(x + radius/2, y, radius/2);
+    drawCircle(x - radius/2, y, radius/2);
+    drawCircle(x, y + radius/2, radius/2);
+    drawCircle(x, y - radius/2, radius/2);
+  }
+}
+</script>
